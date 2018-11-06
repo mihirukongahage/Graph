@@ -62,9 +62,37 @@ def f_path(start, end, path = []):
             if new_path:
                 return new_path
     return None
+
+def shortest_path(start, end, path = []):
+    path = path + [start]
+    shortest = None
+    if(start == end):
+        return path
+    else:
+        for node in graph[start]:
+            if node not in path:
+                new_path = shortest_path(node, end, path)
+                if new_path:
+                    if not shortest or (len(shortest) > len(new_path)):
+                        shortest = new_path
+    return shortest
+                        
+def cyc(start):
+    count  = 0
+    visited = []
+    loop = []
+    s = [start]
+    while(s):
+        p = s.pop(-1)
+        if(p not in visited):
+            visited.append(p)
+            loop.append(p)
+            for v in graph[p]:
+                s.append(v)
+        else:
+            print (visited)
+            loop = []
             
-    
-    
 
 if __name__ == "__main__":
     add_node(0,1)
@@ -76,4 +104,4 @@ if __name__ == "__main__":
 
 
     
-    print(f_path(0,3))
+    print(cyc(0))
